@@ -10,12 +10,12 @@ public class StringTrimTest {
         System.out.println("After trim method: " + trimTest.trim());
         System.out.println();
 
-        trimTest = "...OnePEEighteen!     ";
+        trimTest = "...Testing!     ";
         System.out.println("Before trim method: " + trimTest + " Trim removes the leading spaces.");
         System.out.println("After trim method: " + trimTest.trim() + " Trim removes the leading spaces.");
         System.out.println();
 
-        trimTest = "     ...aaaaaaa...     ";
+        trimTest = "     ...test...     ";
         System.out.println("Before trim method: " + trimTest + " Trim removes the leading spaces.");
         System.out.println("After trim method: " + trimTest.trim() + " Trim removes the leading spaces.");
     }

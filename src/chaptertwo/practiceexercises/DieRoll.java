@@ -8,6 +8,6 @@ import java.util.Random;
 public class DieRoll {
     public static void main(String[] args) {
         Random generator = new Random();
-        System.out.println(generator.nextInt(1, 7));
+        System.out.println(generator.nextInt(6) + 1);
     }
 }

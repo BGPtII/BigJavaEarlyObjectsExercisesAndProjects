@@ -3,7 +3,7 @@ package chapterone.practiceexercises;
 /**
  * Prints the poem 'No Man is an Island' by John Donne
  */
-public class NoManIsAnIslandPrinter {
+public class PoemPrinter {
     public static void main(String[] args) {
         System.out.println("No man is an island entire of itself; every man");
         System.out.println("is a piece of the continent, a part of the main;");

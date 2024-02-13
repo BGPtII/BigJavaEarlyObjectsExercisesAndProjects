@@ -8,24 +8,21 @@ import java.util.Scanner;
 public class LargestInteger {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int intCount = 0;
         int[] userInts = new int[3];
 
-        do {
-            System.out.print("Enter integer #" + (intCount + 1) + ": ");
-            if (scanner.hasNextInt()) {
-                userInts[intCount] = scanner.nextInt();
-                intCount++;
-            }
-            else {
+        for (int i = 0; i < userInts.length; i++) {
+            System.out.print("Enter integer #" + (i + 1) + ": ");
+            while (!scanner.hasNextInt()) {
                 System.out.println("Must enter an integer! Try again.");
+                System.out.print("Enter integer #" + (i + 1) + ": ");
                 scanner.next();
             }
+            userInts[i] = scanner.nextInt();
         }
-        while (intCount < 3);
+        scanner.close();
 
         int largestInt = userInts[0];
-        for (int i = 0; i < userInts.length; i++) {
+        for (int i = 1; i < userInts.length; i++) {
             if (userInts[i] > largestInt) {
                 largestInt = userInts[i];
             }

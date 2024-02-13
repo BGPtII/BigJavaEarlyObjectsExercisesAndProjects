@@ -10,25 +10,39 @@ import java.util.Scanner;
 public class IntegerToDigits {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int userNumber = 0;
-        do {
-            System.out.print("Enter a positive integer less than 6 digits (\"q\" to quit): ");
-            if (scanner.hasNext("q")) {
-                System.exit(0);
-            }
+        int userNumber;
+
+        while (true) {
+            System.out.print("Enter a positive integer less than 100000 (\"q\" to quit): ");
             if (scanner.hasNextInt()) {
                 userNumber = scanner.nextInt();
+                if (userNumber > 0 && userNumber < 100000) {
+                    printDigits(userNumber);
+                }
+                else {
+                    System.out.println("Please enter a positive integer less than 100000.");
+                }
+            }
+            else if (scanner.hasNext("q")) {
+                System.out.println("Exiting the program.");
+                break;
             }
             else {
-                scanner.next();
+                System.out.println("Invalid input. Please enter a positive integer less than 100000.");
+                scanner.next(); // Consume invalid input
             }
         }
-        while (userNumber <= 0 || userNumber >= 100000);
+        scanner.close();
+    }
 
-        String userDigits = Integer.toString(userNumber);
+    private static void printDigits(int number) {
         System.out.print("Your digits: ");
-        for (int i = 0; i < userDigits.length(); i++) {
-            System.out.print(userDigits.charAt(i) + " ");
+        // Extract and print each digit from the number
+        while (number > 0) {
+            int digit = number % 10; // Extract the last digit
+            System.out.print(digit + " ");
+            number /= 10; // Remove the last digit
         }
+        System.out.println();
     }
 }

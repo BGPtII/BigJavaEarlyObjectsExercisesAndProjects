@@ -3,10 +3,6 @@ package chaptersix.practiceexercises;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- * Reads a set of floating-point values; asks the user to enter the values (prompting only a single time for the values), then prints:
- * the average of the values, the smallest of the values, the largest of the values, the range (the difference between the smallest and largest)
- */
 public class DataSet {
     private ArrayList<Double> numbers;
 
@@ -19,59 +15,83 @@ public class DataSet {
     }
 
     public double getSmallest() {
-        double smallest = numbers.get(0);
-        for (double currentInt : numbers) {
-            if (currentInt < smallest) {
-                smallest = currentInt;
+        if (numbers.isEmpty()) {
+            return Double.NaN;
+        }
+        double smallest = Double.MAX_VALUE;
+        for (double num : numbers) {
+            if (num < smallest) {
+                smallest = num;
             }
         }
         return smallest;
     }
 
     public double getLargest() {
-        double largest = numbers.get(0);
-        for (double currentInt : numbers) {
-            if (currentInt > largest) {
-                largest = currentInt;
+        if (numbers.isEmpty()) {
+            return Double.NaN;
+        }
+        double largest = Double.MIN_VALUE;
+        for (double num : numbers) {
+            if (num > largest) {
+                largest = num;
             }
         }
         return largest;
     }
 
     public double getAverage() {
+        if (numbers.isEmpty()) {
+            return Double.NaN;
+        }
         double sum = 0;
-        for (double currentInt : numbers) {
-            sum += currentInt;
+        for (double num : numbers) {
+            sum += num;
         }
         return sum / numbers.size();
     }
 
     public double getRange() {
+        if (numbers.isEmpty()) {
+            return Double.NaN;
+        }
         return getLargest() - getSmallest();
     }
 
-    public static void main(String[] args) {
+    public static DataSet readDataSetFromUser() {
         Scanner scanner = new Scanner(System.in);
-        DataSet main = new DataSet();
+        DataSet dataSet = new DataSet();
+
+        System.out.println("Enter numbers, type 'done' to finish:");
+
         while (true) {
-            System.out.print("Enter a number (\"done\" to print number information): ");
             if (scanner.hasNext("done")) {
                 break;
-            }
-            else if (scanner.hasNextDouble()) {
+            } else if (scanner.hasNextDouble()) {
                 double input = scanner.nextDouble();
-                main.add(input);
-            }
-            else {
-                System.out.println("Enter numbers only!");
+                dataSet.add(input);
+            } else {
+                System.out.println("Invalid input. Enter a number or 'done'.");
                 scanner.next();
             }
         }
 
-        System.out.println("User-entered numbers: " + main.numbers);
-        System.out.println("Average: " + main.getAverage());
-        System.out.println("Smallest: " + main.getSmallest());
-        System.out.println("Largest: " + main.getLargest());
-        System.out.println("Range: " + main.getRange());
+        scanner.close();
+        return dataSet;
+    }
+
+    public static void main(String[] args) {
+        DataSet dataSet = readDataSetFromUser();
+
+        if (!dataSet.numbers.isEmpty()) {
+            System.out.println("User-entered numbers: " + dataSet.numbers.size());
+            System.out.println("Average: " + dataSet.getAverage());
+            System.out.println("Smallest: " + dataSet.getSmallest());
+            System.out.println("Largest: " + dataSet.getLargest());
+            System.out.println("Range: " + dataSet.getRange());
+        }
+        else {
+            System.out.println("No numbers entered.");
+        }
     }
 }

@@ -1,4 +1,4 @@
-package chapterthree.practiceexercises.counter;
+package chapterthree.practiceexercises;
 
 /**
  * Simulates a counter, starts at 0

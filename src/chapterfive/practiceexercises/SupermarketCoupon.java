@@ -12,30 +12,34 @@ import java.util.Scanner;
  */
 public class SupermarketCoupon {
     public static void main(String[] args) {
-        double groceryCost = 0;
         Scanner scanner = new Scanner(System.in);
-        do {
-            System.out.print("PLease enter the cost of your groceries: ");
+        double groceryCost = 0;
+
+        while (groceryCost <= 0) {
+            System.out.print("Please enter the cost of your groceries: ");
             if (scanner.hasNextDouble()) {
                 groceryCost = scanner.nextDouble();
+                if (groceryCost <= 0) {
+                    System.out.println("Cost must be greater than zero. Please try again.");
+                }
             }
             else {
-                System.out.println("Numbers only.");
+                System.out.println("Invalid input. Please enter a valid number.");
                 scanner.next();
             }
-        } while (groceryCost == 0);
+        }
 
         double couponDiscount = 0;
         if (groceryCost > 210) {
             couponDiscount = 0.14;
         }
-        else if (groceryCost > 150 && groceryCost <= 210) {
+        else if (groceryCost > 150) {
             couponDiscount = 0.12;
         }
-        else if (groceryCost > 60 && groceryCost <= 150) {
+        else if (groceryCost > 60) {
             couponDiscount = 0.1;
         }
-        else if (groceryCost > 10 && groceryCost <= 60) {
+        else if (groceryCost > 10) {
             couponDiscount = 0.08;
         }
 
@@ -43,7 +47,9 @@ public class SupermarketCoupon {
             System.out.println("$0 worth of groceries means no coupon.");
         }
         else {
-            System.out.printf("You win a discount coupon of $%.2f. (%d%% of your purchase)", couponDiscount * groceryCost, (int) (couponDiscount * 100));
+            double discountAmount = couponDiscount * groceryCost;
+            System.out.printf("You win a discount coupon of $%.2f. (%d%% of your purchase)%n", discountAmount, (int) (couponDiscount * 100));
         }
+        scanner.close();
     }
 }

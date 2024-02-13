@@ -1,39 +1,38 @@
 package chaptersix.programmingprojects.factorgenerator;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class FactorPrinter {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int numberToFactor;
-        boolean isNegative = false;
+        try (Scanner scanner = new Scanner(System.in)) {
+            int numberToFactor = getValidInput(scanner);
+            FactorGenerator factorGenerator = new FactorGenerator(numberToFactor);
+            printFactors(numberToFactor, factorGenerator);
+        }
+        catch (InputMismatchException e) {
+            System.out.println("Invalid input: not an integer.");
+        }
+    }
+
+    private static int getValidInput(Scanner scanner) {
         System.out.println("Factor Generator");
         System.out.print("Enter an integer to find factors of: ");
-        if (scanner.hasNextInt()) {
-            numberToFactor = scanner.nextInt();
-            if (numberToFactor < 0) {
-                isNegative = true;
-                numberToFactor = Math.abs(numberToFactor);
-            }
-            FactorGenerator fg = new FactorGenerator(numberToFactor);
-            System.out.print("Factors of " + numberToFactor + ": ");
-            if (numberToFactor == 0) {
-                System.out.println("0 has no factors.");
-            }
-            else {
-                while (fg.hasMoreFactors()) {
-                    if (isNegative) {
-                        System.out.print("-");
-                    }
-                    System.out.print(fg.nextFactor());
-                    if (fg.hasMoreFactors()) {
-                        System.out.print(", ");
-                    }
-                }
-            }
+        return scanner.nextInt();
+    }
+
+    private static void printFactors(int numberToFactor, FactorGenerator factorGenerator) {
+        System.out.print("Factors of " + numberToFactor + ": ");
+        if (numberToFactor == 0) {
+            System.out.println("0 has no factors.");
         }
         else {
-            System.out.println("Invalid: not an integer.");
+            while (factorGenerator.hasMoreFactors()) {
+                System.out.print(factorGenerator.nextFactor());
+                if (factorGenerator.hasMoreFactors()) {
+                    System.out.print(", ");
+                }
+            }
         }
     }
 }

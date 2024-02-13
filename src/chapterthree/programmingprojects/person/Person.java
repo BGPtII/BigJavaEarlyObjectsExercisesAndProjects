@@ -10,11 +10,12 @@ public class Person {
     }
 
     public void befriend(Person p) {
-        if (friends.toLowerCase().contains(p.getFirstName().toLowerCase())) {
+        String friendName = p.getFirstName().toLowerCase();
+        if (friends.toLowerCase().contains(friendName)) {
             System.out.println(p.getFirstName() + " already in friend list, unable to add.");
         }
         else {
-            friends += p.getFirstName() + " ";
+            friends += friendName + " ";
         }
     }
 

@@ -2,46 +2,67 @@ package chapterfour.programmingprojects;
 
 import java.util.Scanner;
 
-/**
- * Computes the price of an order from the total price and the number of the books that were ordered
- * Tax is 7.5% of the total book price, shipping charge is $2 per book
- * The price of the order is the sum of: the total book price, the tax, and the shipping charge.
- */
 public class BookStore {
+    private static final double TAX_RATE = 0.075;
+    private static final double SHIPPING_CHARGE_PER_BOOK = 2.0;
+
     public static void main(String[] args) {
-        int numBooks = 0;
-        double totalBookPrice = 0;
         Scanner scanner = new Scanner(System.in);
 
-        do {
-            if (numBooks <= 0) {
-                System.out.print("Enter number of books ordered (\"q\" to quit): ");
-                if (scanner.hasNext("q")) {
-                    System.exit(0);
-                }
-                if (scanner.hasNextInt()) {
-                    numBooks = scanner.nextInt();
-                }
-                else {
-                    scanner.next();
+        int numBooks = getNumberOfBooks(scanner);
+        double totalBookPrice = getTotalPriceOfBooks(scanner);
+
+        double totalPrice = calculateTotalPrice(numBooks, totalBookPrice);
+        System.out.printf("Total price is: $%.2f%n", totalPrice);
+
+        scanner.close();
+    }
+
+    private static int getNumberOfBooks(Scanner scanner) {
+        int numBooks = 0;
+        while (numBooks <= 0) {
+            System.out.print("Enter number of books ordered (\"q\" to quit): ");
+            if (scanner.hasNextInt()) {
+                numBooks = scanner.nextInt();
+                if (numBooks <= 0) {
+                    System.out.println("Please enter a positive number of books.");
                 }
             }
-            if (totalBookPrice <= 0) {
-                System.out.print("Enter total price of books (\"q\" to quit): ");
-                if (scanner.hasNext("q")) {
-                    System.exit(0);
-                }
-                if (scanner.hasNextDouble()) {
-                    totalBookPrice = scanner.nextDouble();
-                }
-                else {
-                    scanner.next();
-                }
+            else if (scanner.hasNext("q")) {
+                System.exit(0);
+            }
+            else {
+                System.out.println("Invalid input. Please enter a positive integer or \"q\" to quit.");
+                scanner.next();
             }
         }
-        while (numBooks <= 0 || totalBookPrice <= 0);
+        return numBooks;
+    }
 
-        double totalCalculatedPrice = totalBookPrice + (0.075 * totalBookPrice) + (2 * numBooks);
-        System.out.printf("Total price is: $%.2f", totalCalculatedPrice);
+    private static double getTotalPriceOfBooks(Scanner scanner) {
+        double totalBookPrice = 0;
+        while (totalBookPrice <= 0) {
+            System.out.print("Enter total price of books (\"q\" to quit): ");
+            if (scanner.hasNextDouble()) {
+                totalBookPrice = scanner.nextDouble();
+                if (totalBookPrice <= 0) {
+                    System.out.println("Please enter a positive total price of books.");
+                }
+            }
+            else if (scanner.hasNext("q")) {
+                System.exit(0);
+            }
+            else {
+                System.out.println("Invalid input. Please enter a positive number or \"q\" to quit.");
+                scanner.next();
+            }
+        }
+        return totalBookPrice;
+    }
+
+    private static double calculateTotalPrice(int numBooks, double totalBookPrice) {
+        double tax = TAX_RATE * totalBookPrice;
+        double shippingCharge = SHIPPING_CHARGE_PER_BOOK * numBooks;
+        return totalBookPrice + tax + shippingCharge;
     }
 }
